@@ -3,6 +3,7 @@ import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Authentication/login_page.dart';
 import 'Authentication/register_page.dart';
+import 'Home/home_page.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'Auth Demo',
       initialRoute: '/',
       routes: {
+        '/home': (context) => HomePage(),
         '/': (context) => LoginPage(),
         '/register': (context) => RegisterPage(),
       },

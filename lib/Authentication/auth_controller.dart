@@ -15,6 +15,9 @@ class AuthController {
         email: emailAddress,
         password: password,
       );
+      if (FirebaseAuth.instance.currentUser != null) {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -31,15 +34,16 @@ class AuthController {
     String name = nameController.text.trim();
 
     try {
-      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailAddress,
-        password: password,
-      );
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: emailAddress,
+            password: password,
+          );
       // Save user information to Firestore
-      await FirebaseFirestore.instance.collection('users').doc(credential.user!.uid).set({
-        'email': emailAddress,
-        'name': name,
-      });
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(credential.user!.uid)
+          .set({'email': emailAddress, 'name': name});
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
